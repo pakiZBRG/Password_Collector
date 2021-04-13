@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const passwordSchema = new mongoose.Schema({
-    collectionId:{
+    collector: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Collection",
         required: true
     },
     userId: {
@@ -15,7 +15,6 @@ const passwordSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true
     },
     password: {
         type: String,

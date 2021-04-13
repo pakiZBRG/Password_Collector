@@ -11,14 +11,19 @@ exports.newPassword = (req, res) => {
     }
 
     const newPassword = new Password({
+        collector: req.body.collector,
         userId: req.loggedUser.userId,
-        webiste: req.body.website,
         email: req.body.email,
         password: req.body.password
     })
 
     newPassword.save()
-        .then(() => res.status(201).json({ message: "Password successfully added!" }))
+        .then(pass => {
+            res.status(201).json({ 
+                message: "Password successfully added!",
+                password: pass
+            })
+        })
         .catch(err => res.status(500).json({ error: err.message }))
 }
 
@@ -26,6 +31,7 @@ exports.getPasswords = (req, res) => {
     Password.find({userId: req.params.userId})
         .select("-__v")
         .populate('userId', '-__v')
+        .populate('collector', '-__v')
         .then(pass => {
             return res.status(200).json({
                 count: pass.length,
