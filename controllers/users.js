@@ -2,7 +2,6 @@ const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const { errorHandler } = require('../utils/errorHandler');
 
 exports.userRegister = (req, res) => {
     // Validation and error handling
@@ -21,7 +20,7 @@ exports.userRegister = (req, res) => {
             } else {
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if(err) {
-                        return res.status(500).json({ error: errorHandler(err) });
+                        return res.status(500).json({ error: err.message });
                     } else {
                         const newUser = new User({
                             email: req.body.email,
@@ -30,7 +29,7 @@ exports.userRegister = (req, res) => {
 
                         newUser.save()
                             .then(() => res.status(201).json({ message: "User created" }))
-                            .catch(err => res.status(500).json({ error: errorHandler(err) }))
+                            .catch(err => res.status(500).json({ error: err.message }))
                     }
                 })
             }
@@ -74,23 +73,22 @@ exports.userLogin = (req, res) => {
                 }
             })
         })
-        .catch(err => res.status(500).json({ error: errorHandler(err) }))
+        .catch(err => res.status(500).json({ error: err.message }))
 }
 
 exports.getUser = (req, res) => {
-    User.findOne({_id: req.params.id})
-        .populate('savedPasswords')
+    User.find({_id: req.params.id})
+        .select('-__v')
         .then(user => {
             if(user){
                 res.status(200).json({
-                    _id: user._id,
-                    email: user.email
+                    user
                 })
             } else {
                 return res.status(410).json({ message: "No user with given id" })
             }
         })
-        .catch(err => res.status(500).json({ error: errorHandler(err) }));
+        .catch(err => res.status(500).json({ error: err.message }));
 }
 
 exports.userDelete = (req, res) => {
@@ -102,5 +100,5 @@ exports.userDelete = (req, res) => {
                 res.status(401).json({ message: "No user was found" });
             }
         })
-        .catch(err => res.status(500).json({ error: errorHandler(err) }));
+        .catch(err => res.status(500).json({ error: err.message }));
 }

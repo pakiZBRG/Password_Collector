@@ -10,14 +10,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    savedPasswords: [{
-        single: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Password",
-            required: true
-        }
-    }]
+    }
 }, {timestamp: true});
 
 module.exports = mongoose.model('User', userSchema);
