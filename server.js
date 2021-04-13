@@ -22,7 +22,8 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Routes
 app.use("/users", require('./routes/users'));
-app.use("/password", require('./routes/passwords'));
+app.use("/passwords", require('./routes/passwords'));
+app.use("/collections", require('./routes/collections'));
 app.get('/', (req, res) => {
     res.send("Server running")
 })
