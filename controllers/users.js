@@ -79,6 +79,7 @@ exports.userLogin = (req, res) => {
 
 exports.getUser = (req, res) => {
     User.findOne({_id: req.params.id})
+        .populate('savedPasswords')
         .then(user => {
             if(user){
                 res.status(200).json({

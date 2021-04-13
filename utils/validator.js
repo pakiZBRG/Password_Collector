@@ -18,3 +18,7 @@ exports.validLogin = [
         .withMessage('Password must contain at least 8 characters')
         .matches(/\d/).withMessage('Password must contain a number')
 ]
+
+exports.validEmail = [
+    check('email', 'Email is required').isEmail().withMessage('Must be a valid email address')
+]
