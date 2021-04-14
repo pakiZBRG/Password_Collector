@@ -12,11 +12,9 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     collections: [{
-        collId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Collection",
-            required: true
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Collection",
+        required: true
     }]
 }, {timestamp: true});
 
