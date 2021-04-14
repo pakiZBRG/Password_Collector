@@ -7,10 +7,12 @@ exports.newCollection = (req, res) => {
     const { userId } = jwt.decode(req.headers.token);
 
     const newCollection = new Collection({
+        userId: userId,
         name: req.body.name,
         website: req.body.website
     })
 
+    // save new Collection
     newCollection.save()
         .then(collection => {
             collId = collection._id;
@@ -19,6 +21,7 @@ exports.newCollection = (req, res) => {
                 collection
             })
         })
+        // Add it to the User collections references
         .then(() => {
             User.findById(userId)
                 .then(user => {
