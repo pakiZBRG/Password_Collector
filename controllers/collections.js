@@ -21,15 +21,15 @@ exports.newCollection = (req, res) => {
                 collection
             })
         })
-        // Add it to the User collections references
+        // Add created collection to the User collections references
         .then(() => {
             User.findById(userId)
-                .then(user => {
-                    const updatedCollection = [...user.collections];
+                .then(coll => {
+                    const updatedCollection = [...coll.collections];
                     updatedCollection.push(collId);
 
-                    user.collections = updatedCollection;
-                    return user.save();
+                    coll.collections = updatedCollection;
+                    return coll.save();
                 })
         })
         .catch(err => res.status(500).json({ error: err }));
@@ -39,6 +39,7 @@ exports.getCollection = (req, res) => {
     Collection.findOne({_id: req.params.id})
         .select("-__v")
         .populate('userId')
+        .populate("passwords", '-__v')
         .then(coll => {
             if(coll){
                 res.status(200).json({ collection: {
@@ -48,7 +49,8 @@ exports.getCollection = (req, res) => {
                     userId: {
                         _id: coll.userId._id,
                         email: coll.userId.email
-                    }
+                    },
+                    passwords: coll.passwords
                 }})
             } else {
                 return res.status(410).json({ error: "No collections with given id" })

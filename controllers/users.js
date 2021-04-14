@@ -81,7 +81,15 @@ exports.userLogin = (req, res) => {
 exports.getUser = (req, res) => {
     User.find({_id: req.params.id})
         .select('-__v')
-        .populate('collections', '-__v')
+        // Populate a populated document
+        .populate({
+            path: 'collections',
+            select: '-__v',
+            populate: {
+                path: 'passwords',
+                select: '-__v'
+            }
+        })
         .then(user => {
             if(user){
                 res.status(200).json({
