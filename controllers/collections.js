@@ -1,21 +1,37 @@
 const Collection = require('../model/Collection');
+const User = require('../model/User');
 const jwt = require('jsonwebtoken');
 
 exports.newCollection = (req, res) => {
+    let collId;
     const { userId } = jwt.decode(req.headers.token);
+
     const newCollection = new Collection({
         name: req.body.name,
         website: req.body.website
     })
 
     newCollection.save()
-        .then(coll => {
+        .then(collection => {
+            collId = collection._id;
             res.status(201).json({ 
                 message: "Collection successfully created",
-                collection: coll
+                collection
             })
         })
-        .catch(err => res.status(500).json({ error: err.message }));
+        .then(() => {
+            User.findById(userId)
+                .then(user => {
+                    const updatedCollection = [...user.collections];
+                    updatedCollection.push({
+                        collId: collId
+                    });
+
+                    user.collections = updatedCollection;
+                    return user.save();
+                })
+        })
+        .catch(err => res.status(500).json({ error: err }));
 }
 
 exports.getCollection = (req, res) => {

@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const Password = require('../model/Password');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
@@ -50,7 +51,7 @@ exports.userLogin = (req, res) => {
         .then(user => {
             if(!user) {
                 return res.status(409).json({
-                    message: "No user with given email"
+                    message: "No user with given email",
                 })
             }
             bcrypt.compare(req.body.password, user.password, (err, result) => {
@@ -66,7 +67,8 @@ exports.userLogin = (req, res) => {
                     }, process.env.JWT_SECRET, {expiresIn: "1h"});
                     return res.status(200).json({
                         message: "Signin successful",
-                        token
+                        token,
+                        user
                     })
                 } else {
                     return res.status(401).json({ message: "Invalid credentials" })
@@ -79,6 +81,7 @@ exports.userLogin = (req, res) => {
 exports.getUser = (req, res) => {
     User.find({_id: req.params.id})
         .select('-__v')
+        .populate('collections.collId', '-__v')
         .then(user => {
             if(user){
                 res.status(200).json({
@@ -92,13 +95,18 @@ exports.getUser = (req, res) => {
 }
 
 exports.userDelete = (req, res) => {
-    User.findByIdAndRemove({_id: req.params.id})
+    User.findById({_id: req.params.id})
         .then(user => {
-            if(user) {
-                res.status(200).json({ message: "User deleted" });
-            } else {
-                res.status(401).json({ message: "No user was found" });
+            if(!user) {
+                return res.status(200).json({ message: "No user was found" });
             }
+            return Password.updateMany({}, {"$pull": {userId: req.params.id}}, {multi: true});
+        })
+        .then(() => {
+            return User.findByIdAndRemove(req.params.id);
+        })
+        .then(() => {
+            res.status(200).json({ message: "Deleted user and its passwords" });
         })
         .catch(err => res.status(500).json({ error: err.message }));
 }
