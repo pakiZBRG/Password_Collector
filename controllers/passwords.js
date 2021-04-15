@@ -1,12 +1,10 @@
 const Password = require('../model/Password');
 const Collection = require('../model/Collection');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator');
 
 exports.newPassword = (req, res) => {
     let passId;
-    const { userId } = jwt.decode(req.headers.token);
-    console.log(userId)
     // Validation and error handling
     const errors = validationResult(req);
 
@@ -34,7 +32,6 @@ exports.newPassword = (req, res) => {
         .then(() => {
             Collection.findById(req.body.collector)
                 .then(user => {
-                    console.log(user)
                     const updatedPasswords = [...user.passwords];
                     updatedPasswords.push(passId);
 
@@ -64,6 +61,29 @@ exports.getPasswords = (req, res) => {
                 count: pass.length,
                 userPasswords: pass
             })
+        })
+        .catch(err => res.status(500).json({ error: err.message }));
+}
+
+exports.deletePassword = (req, res) => {
+    const passId = req.params.id;
+    
+    Password.findById(passId)
+        .then(pass => {
+            if(!pass){
+                return res.status(404).json({ messsage: "No password with given id" })
+            }
+            // Find collection with password we want to delete and remove its ref
+            return Collection.find({ passwords: {$in: [passId]} })
+        })
+        .then(coll => {
+            coll[0].passwords.pull(passId);
+            return coll[0].save();
+        })
+        // Delete password
+        .then(() => Password.findByIdAndRemove(passId))
+        .then(() => {
+            res.status(200).json({ message: "Password successfully deleted" });
         })
         .catch(err => res.status(500).json({ error: err.message }));
 }
