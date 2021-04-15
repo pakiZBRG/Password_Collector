@@ -1,5 +1,6 @@
 const User = require('../model/User');
 const Collection = require('../model/Collection');
+const Password = require('../model/Password');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
@@ -103,17 +104,20 @@ exports.getUser = (req, res) => {
 }
 
 exports.userDelete = (req, res) => {
-    User.findById({_id: req.params.id})
+    const userId = req.params.id;
+
+    User.findById({_id: userId})
         .then(user => {
             if(!user) {
                 return res.status(200).json({ message: "No user was found" });
             }
             // Delete user's collections
-            return Collection.deleteMany({userId: req.params.id});
+            return Collection.deleteMany({userId: userId});
         })
-        .then(() => {
-            return User.findByIdAndRemove(req.params.id);
-        })
+        // Delete user's password
+        .then(() => Password.deleteMany({ userId: userId }))
+        // Delete user
+        .then(() => User.findByIdAndRemove(userId))
         .then(() => {
             res.status(200).json({ message: "Deleted user and its collections" });
         })
