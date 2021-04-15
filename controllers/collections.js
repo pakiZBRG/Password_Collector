@@ -1,6 +1,7 @@
 const Collection = require('../model/Collection');
 const User = require('../model/User');
 const jwt = require('jsonwebtoken');
+const Password = require('../model/Password');
 
 exports.newCollection = (req, res) => {
     let collId;
@@ -55,6 +56,33 @@ exports.getCollection = (req, res) => {
             } else {
                 return res.status(410).json({ error: "No collections with given id" })
             }
+        })
+        .catch(err => res.status(500).json({ error: err.message }));
+}
+
+exports.deleteCollection = (req, res) => {
+    const collId = req.params.id;
+    let userCollId;
+
+    Collection.findById({_id: collId})
+        .then(coll => {
+            if(!coll) {
+                return res.status(200).json({ message: "No collection was found" });
+            }
+            userCollId = coll.userId
+            // Delete passwords from the collection
+            return Password.deleteMany({collector: collId});
+        })
+        // Find User who has the deleted collection and belongs to him
+        .then(() => User.find({ collections: {$in: [collId]}, _id: userCollId }))
+        .then(user => {
+            user[0].collections.pull(collId);
+            return user[0].save();
+        })
+        // Delete collection
+        .then(() => Collection.findByIdAndRemove(collId))
+        .then(() => {
+            res.status(200).json({ message: "Deleted collection and its passwords" });
         })
         .catch(err => res.status(500).json({ error: err.message }));
 }
