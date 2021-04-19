@@ -1,6 +1,7 @@
 const Password = require('../model/Password');
 const Collection = require('../model/Collection');
 const { validationResult } = require('express-validator');
+const { generateSalt } = require('../utils/Salting');
 
 exports.newPassword = (req, res) => {
     let passId;
@@ -12,12 +13,40 @@ exports.newPassword = (req, res) => {
         return res.status(422).json({ error: firstError });
     }
 
+    /**
+     * Hashing the password
+     */
+    // Convert each character into ASCII code
+    const pass = req.body.password.split('');
+    let i = pass.length - 1;
+    let asciiPass = [];
+    while(i > -1){
+        const asciiChar = pass[i].charCodeAt(0);
+        if(i % 2 == 0){
+            asciiPass.push(asciiChar + process.env.MOVE_M);
+        } else {
+            asciiPass.push(asciiChar + process.env.MOVE_N);
+        }
+        i--;
+    }
+
+    // Generate salts
+    const prefix = generateSalt(process.env.PREFIX);
+    const sufix = generateSalt(process.env.SUFIX);
+
+    // Converti ASCII code into character
+    let stringPass = [];
+    asciiPass.forEach(p => stringPass.push(String.fromCharCode(p)));
+
+    // Combine everything
+    const hash = prefix + pass3.join('') + sufix;
+
     const newPassword = new Password({
         collector: req.body.collector,
         userId: req.loggedUser.userId,
         email: req.body.email,
-        password: req.body.password
-    })
+        password: hash
+    });
 
     newPassword.save()
         .then(pass => {
