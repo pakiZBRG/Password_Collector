@@ -1,6 +1,5 @@
 const Password = require('../model/Password');
 const Collection = require('../model/Collection');
-const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator');
 
 exports.newPassword = (req, res) => {
@@ -86,4 +85,21 @@ exports.deletePassword = (req, res) => {
             res.status(200).json({ message: "Password successfully deleted" });
         })
         .catch(err => res.status(500).json({ error: err.message }));
+}
+
+exports.updatePassword = (req, res) => {
+    const id = req.params.id;
+    const update = {};
+    for(const i of req.body){
+        update[i.name] = i.value;
+    }
+    Password.updateOne({_id: id}, {$set: update})
+        .exec()
+        .then(() => {
+            res.status(200).json({
+                message: "Password updated",
+                url: `http://${req.get('host')}/api/products/${id}`
+            })
+        })
+        .catch(err => res.status(500).json({error: err.message}))
 }

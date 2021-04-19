@@ -97,7 +97,7 @@ exports.updateCollection = (req, res) => {
         .exec()
         .then(() => {
             res.status(200).json({
-                message: "Product updated",
+                message: "Collection updated",
                 url: `http://${req.get('host')}/collections/${id}`
             })
         })
