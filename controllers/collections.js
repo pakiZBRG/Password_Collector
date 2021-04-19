@@ -86,3 +86,20 @@ exports.deleteCollection = (req, res) => {
         })
         .catch(err => res.status(500).json({ error: err.message }));
 }
+
+exports.updateCollection = (req, res) => {
+    const id = req.params.id;
+    const update = {};
+    for(const i of req.body){
+        update[i.name] = i.value;
+    }
+    Collection.updateOne({_id: id}, {$set: update})
+        .exec()
+        .then(() => {
+            res.status(200).json({
+                message: "Product updated",
+                url: `http://${req.get('host')}/collections/${id}`
+            })
+        })
+        .catch(err => res.status(500).json({error: err.message}))
+}
