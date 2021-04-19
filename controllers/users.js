@@ -80,27 +80,34 @@ exports.userLogin = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    User.find({_id: req.params.id})
-        .select('-__v')
-        // Populate a populated document
-        .populate({
-            path: 'collections',
-            select: '-__v',
-            populate: {
-                path: 'passwords',
-                select: '-__v'
-            }
-        })
-        .then(user => {
-            if(user){
-                res.status(200).json({
-                    user
-                })
-            } else {
-                return res.status(410).json({ message: "No user with given id" })
-            }
-        })
-        .catch(err => res.status(500).json({ error: err.message }));
+    const token = jwt.decode(req.headers.token);
+    
+    if(token){
+        User.find({_id: token.userId})
+            .select('-__v')
+            // Populate a populated document
+            .populate({
+                path: 'collections',
+                select: '-__v',
+                populate: {
+                    path: 'passwords',
+                    select: '-__v'
+                }
+            })
+            .then(user => {
+                if(user){
+                    res.status(200).json({
+                        user
+                    })
+                } else {
+                    return res.status(410).json({ message: "No user with given id" })
+                }
+            })
+            .catch(err => res.status(500).json({ error: err.message }));
+    } else {
+        return res.status(401).json({ message: "Login or create an account" })
+    }
+    
 }
 
 exports.userDelete = (req, res) => {

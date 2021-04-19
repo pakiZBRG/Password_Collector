@@ -98,7 +98,7 @@ exports.updatePassword = (req, res) => {
         .then(() => {
             res.status(200).json({
                 message: "Password updated",
-                url: `http://${req.get('host')}/api/products/${id}`
+                url: `http://${req.get('host')}/passwords/${id}`
             })
         })
         .catch(err => res.status(500).json({error: err.message}))
