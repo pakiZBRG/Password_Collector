@@ -2,6 +2,7 @@ const User = require('../model/User');
 const Collection = require('../model/Collection');
 const Password = require('../model/Password');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
@@ -77,6 +78,64 @@ exports.userLogin = (req, res) => {
             })
         })
         .catch(err => res.status(500).json({ error: err.message }))
+}
+
+exports.forgotPassword = async (req, res) => {
+    // Validation and error handling
+    const errors = validationResult(req);
+    const email = req.body.email;
+
+    if(!errors.isEmpty()){
+        const firstError = errors.array().map(error => error.msg)[0]
+        return res.status(422).json({ error: firstError })
+    }
+    else {
+        //If user with given email exists
+        const user = await User.findOne({email});
+        if(user){
+            //Generate token for 15 minutes
+            const token = jwt.sign({_id: user._id}, process.env.JWT_RESET_PASSWORD, {expiresIn: '15min'});
+            
+            //Send email with this token
+            const emailData = {
+                from: process.env.EMAIL_FROM,
+                to: req.body.email,
+                subject: "Reset password link",
+                html: `
+                    <h4>Please Click on Link to Reset Password:</h4>
+                    <p>http://localhost:5000/resetpassword/${token}</p>
+                `
+            }
+    
+            const transport = {
+                host: 'smtp.gmail.com',
+                auth: {
+                    user: process.env.EMAIL_FROM,
+                    pass: process.env.EMAIL_PASSWORD
+                }
+            };
+            const transporter = nodemailer.createTransport(transport);
+    
+            transporter.verify((err, success) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    console.log("Server is ready to take messages");
+                }
+            });
+    
+            transporter.sendMail(emailData, function(err, info){
+                if(err) {
+                    console.log(err);
+                } else {
+                    console.log(`Email send to ${info.response}`);
+                    res.status(200).json({ message: `Email has been sent to ${email}` });
+                }
+            });
+        } else {
+            return res.status(401).json({ message: "No user with given email" });
+        }
+    }
 }
 
 exports.getUser = (req, res) => {
