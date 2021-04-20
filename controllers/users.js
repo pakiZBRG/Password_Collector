@@ -4,6 +4,7 @@ const Password = require('../model/Password');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const { validationResult } = require('express-validator');
 
 exports.userRegister = (req, res) => {
@@ -103,7 +104,7 @@ exports.forgotPassword = async (req, res) => {
                 subject: "Reset password link",
                 html: `
                     <h4>Please Click on Link to Reset Password:</h4>
-                    <p>http://localhost:5000/resetpassword/${token}</p>
+                    <p>http://localhost:5000/users/resetpassword/${token}</p>
                 `
             }
     
@@ -135,6 +136,40 @@ exports.forgotPassword = async (req, res) => {
         } else {
             return res.status(401).json({ message: "No user with given email" });
         }
+    }
+}
+
+exports.resetPassword = (req, res) => {
+    const link = req.params.link;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        const firstError = errors.array().map(error => error.msg)[0]
+        return res.status(422).json({ error: firstError })
+    } else {
+        jwt.verify(link, process.env.JWT_RESET_PASSWORD, function(err, decoded) {
+            if(err) {
+                return res.status(400).json({ error: "Expired Link, send another one." })
+            }
+            User.findOne({_id: decoded._id}, async (err, user) => {
+                if(err || !user){
+                    return res.status(400).json({ error: "Error occured. Try again by sending another reset password link." });
+                }
+                
+                const newHashPassword = await bcrypt.hash(req.body.password, 10);
+                const updatedUser = {
+                    password: newHashPassword,
+                }
+
+                user = _.extend(user, updatedUser);
+                user.save((err, result) => {
+                    if (err) {
+                        return res.status(400).json({ error: 'Error resetting user password' });
+                    }
+                    res.json({message: 'Password successfully reseted'});
+                });
+            });
+        });
     }
 }
 
