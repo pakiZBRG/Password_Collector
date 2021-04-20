@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-function Home() {
+function HeroBackgorund() {
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
 
     return (
@@ -40,4 +40,4 @@ function Home() {
     )
 }
 
-export default Home
+export default HeroBackgorund
