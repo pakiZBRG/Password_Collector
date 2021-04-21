@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import './HeroBackground.scss';
 
 function HeroBackgorund() {
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };

@@ -1,0 +1,91 @@
+$font: #222;
+
+.context {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 3rem 5rem;
+    mix-blend-mode: color-burn;
+    @media(max-width: 800px){
+        padding: 2rem;
+    }
+
+    &-title{
+        height: 9rem;
+        overflow: hidden;
+        color: $font;
+        font-size: 3.8rem;
+        @media(max-width: 1465px){
+            height: 18rem;
+        }
+        @media(max-width: 800px){
+            font-size: 1.68rem;
+            height: 8.5rem;
+        }
+    }
+
+    &-brief{
+        color: $font;
+        font-size: 1.4rem;
+        width: 70%;
+        padding: 1.5rem 1rem;
+        @media(max-width: 800px){
+            font-size: 1rem;
+            width: 85%;
+        }
+    }
+}
+
+.btn {
+    cursor: pointer;
+    margin: 1.5rem 1rem;
+    font-size: 1.3rem;
+    line-height: 3rem;
+    padding: 0rem 2rem;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    @media(max-width: 800px){
+        font-size: 1.1rem;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.effect04 {
+    display: inline-flex;
+    color: $font;
+    outline: solid 1px $font;
+    position: relative;
+    transition-duration: 0.4s;
+    overflow: hidden;
+    &::before,
+    & span {
+        margin: 0 auto;
+        transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+        transition-duration: 0.4s;
+    }
+    
+    &:hover{
+        background-color: $font;
+        & span{
+            transform: translateY(-400%) scale(-0.1,20);
+        }
+    }
+  
+    &::before{
+        content: attr(data-sm-link-text);
+        color: #FFF;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform: translateY(500%) scale(-0.1,20);
+    }
+  
+    &:hover::before{
+        letter-spacing: 0.05em;
+        transform: translateY(0) translateX(30%) scale(1,1);
+    }
+}
