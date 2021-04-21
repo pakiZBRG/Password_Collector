@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import './HeroContext.scss';
+import { Link } from 'react-router-dom';
 
 function HeroContext() {
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
@@ -24,15 +25,17 @@ function HeroContext() {
             >
                 Why memorise all your passwords or write them down and store them under your keyboard when you can put them all on single place and instead remember only one
             </motion.p>
-            <motion.a
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                transition={{delay: 1.5, ...easeOut}}
-                className="btn effect04" 
-                data-sm-link-text="Join Now"
-            >
-                <span>Create Account</span>
-            </motion.a>
+            <Link to='/register'>
+                <motion.div
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    transition={{delay: 1.5, ...easeOut}}
+                    className="btn effect04" 
+                    data-sm-link-text="Join Now"
+                >
+                    <span>Create Account</span>
+                </motion.div>
+            </Link>
         </div>
     )
 }
