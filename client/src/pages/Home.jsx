@@ -30,17 +30,11 @@ function Home() {
                     initial={{opacity: 0}}
                     animate={{opacity: 1}}
                     transition={{delay: 1.5, ...easeOut}}
-                    class="btn effect04" 
-                    data-sm-link-text="Pass 'em now"
+                    className="btn effect04" 
+                    data-sm-link-text="Join Now"
                 >
                     <span>Create Account</span>
                 </motion.a>
-                <div>
-                    <i className="fa fa-facebook"></i>
-                    <i className="fa fa-twitter"></i>
-                    <i className="fa fa-instagram"></i>
-                    <i className="fa fa-github"></i>
-                </div>
             </div>
         </>
     )

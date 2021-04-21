@@ -8,8 +8,9 @@ $font: #222;
 }
 
 body{
-  overflow-x: hidden;
+  overflow: hidden;
   font-family: 'Libre Baskerville';
+  user-select: none;
 }
 
 /* HERO BACKGROUND */
@@ -23,19 +24,48 @@ body{
     background: #da3b35;
     grid-area: 1 / 1 / 17 / 17;
   }
-  &-green {
+  &-beige {
     background: #F8D05D;
     grid-area: 1 / 17 / 19 / 21;
+    display: flex;
+    justify-content: right;
+    & h5 {
+      padding: 0.5rem;
+      writing-mode: sideways-lr;
+      align-self: center;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        top: -80%;
+        right: 50%;
+        height: 100px;
+        width: 2px;
+        background: $font;
+      }
+    }
   }
-  &-blue {
+  &-black {
     background: #302d29;
     grid-area: 19 / 15 / 21 / 21;
+    & .social-links{
+      display: flex;
+      height: 100%;
+      font-size: 1rem;
+      color: #fff;
+      width: 50%;
+      justify-content: space-evenly;
+      align-items: center;
+      & i {
+        cursor: pointer;
+      }
+    }
   }
-  &-yellow {
+  &-cian {
     background: #1bdde6;
     grid-area: 17 / 1 / 21 / 15;
   }
-  &-beige {
+  &-blue {
     background: #4600f1;
     grid-area: 17 / 15 / 19 / 17;
   }
@@ -47,6 +77,7 @@ body{
   top: 0;
   left: 0;
   padding: 3rem 5rem;
+  mix-blend-mode: color-burn;
   &-title{
     height: 9rem;
     overflow: hidden;
@@ -110,6 +141,6 @@ body{
 
   &:hover::before{
     letter-spacing: 0.05em;
-    transform: translateY(0) translateX(20%) scale(1,1);
+    transform: translateY(0) translateX(30%) scale(1,1);
   }
 }
