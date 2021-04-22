@@ -10,12 +10,14 @@ function HeroBackgorund() {
             <motion.div
                 initial={{ scaleX: 0, transformOrigin: 'left'}}
                 animate={{ scaleX: 1}}
+                // exit={{scaleX: 0, delay: 1}}
                 transition={easeOut}
                 className="background-red"
             ></motion.div>
             <motion.div
                 initial={{ scaleY: 0, transformOrigin: 'top'}}
                 animate={{ scaleY: 1}}
+                exit={{scaleY: 0, delay: 1.2}}
                 transition={{delay: 0.3, ...easeOut}}
                 className="background-beige"
             >
@@ -30,6 +32,7 @@ function HeroBackgorund() {
             <motion.div
                 initial={{ scaleY: 0, transformOrigin: 'bottom'}}
                 animate={{ scaleY: 1}}
+                exit={{scaleY: 0, delay: 1.4}}
                 transition={{delay: 0.5, ...easeOut}}
                 className="background-black social"
             >
@@ -48,14 +51,16 @@ function HeroBackgorund() {
             <motion.div
                 initial={{ scaleX: 0, transformOrigin: 'left'}}
                 animate={{ scaleX: 1}}
+                exit={{scaleX: 0, delay: 1.6}}
                 transition={{delay: 0.8, ...easeOut}}
                 className="background-cian"
             ></motion.div>
             <motion.div
                 initial={{ scaleX: 0, transformOrigin: 'right'}}
                 animate={{ scaleX: 1}}
+                exit={{scaleX: 0, delay: 1.8}}
                 transition={{delay: 1, ...easeOut}}
-                className="background-blue"
+                className="background-purple"
             ></motion.div>
         </div>
     )
