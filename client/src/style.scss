@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Poppins&display=swap');
 
 $font: #222;
 
@@ -11,4 +11,59 @@ body{
   overflow: hidden;
   font-family: 'Libre Baskerville';
   user-select: none;
+}
+
+input,
+button {
+  outline: none
+}
+
+.register {
+  background: #fff;
+  border-radius: 4rem;
+  box-shadow: 0 0 2rem rgba(34, 34, 34, 0.746);
+  max-width: 70%;
+  max-height: 70%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  &-image{
+    background: red;
+    border-radius: 4rem;
+    box-shadow: .2rem 0 .6rem -1px rgba(34, 34, 34, 0.746);
+  }
+
+  &-form {
+    padding: 6rem;
+    font-family: 'Poppins';
+  }
+}
+
+.form{
+  &-input{
+    display: flex;
+    flex-direction: column;
+    margin: 1.3rem 0;
+    & label {
+      margin-bottom: 0.3rem;
+    }
+    & input {
+      border: 2px solid rgba(128, 128, 128, 0.267);
+      border-radius: 1rem;
+      padding: .9rem;
+    }
+  }
+  & input[type='submit']{
+    background: yellow;
+    border: none;
+    border-radius: 2rem;
+    width: 100%;
+    cursor: pointer;
+  }
 }
