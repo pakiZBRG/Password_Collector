@@ -1,0 +1,30 @@
+$font: #222;
+
+.register-background {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(32, 5vw);
+    grid-template-rows: repeat(32, 5vh);
+    position: relative;
+
+    &__beige{
+        background: #F8D05D;
+        grid-area: 1 / 1 / 15 / 15;
+    }
+
+    &__red {
+        background: #da3b35;
+        grid-area: 1 / 15 / 15 / 21;
+    }
+
+    &__purple {
+        background: #4600f1;
+        grid-area: 15 / 10 / 21 / 21;
+    }
+
+    &__black {
+        background: #302d29;
+        grid-area: 15 / 1 / 21 / 10;
+    }
+}

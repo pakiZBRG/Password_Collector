@@ -10,7 +10,7 @@ function HeroBackgorund() {
             <motion.div
                 initial={{ scaleX: 0, transformOrigin: 'left'}}
                 animate={{ scaleX: 1}}
-                // exit={{scaleX: 0, delay: 1}}
+                exit={{scaleX: 0, delay: 1}}
                 transition={easeOut}
                 className="background-red"
             ></motion.div>

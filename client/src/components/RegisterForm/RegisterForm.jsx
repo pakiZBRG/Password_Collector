@@ -14,43 +14,46 @@ function RegisterForm() {
     }
 
     return (
-        <div className='register-form'>
-            <h1>Create An Account</h1>
-            <form onSubmit={() => handleSubmit(this)} className="form">
-                <div className='form-input'>
-                    <label htmlFor='email'>Email Address</label>
-                    <input
-                        type='email'
-                        name='email'
-                        placeholder='Enter your email'
-                        autoComplete='off'
-                    />
-                </div>
-                <div className='form-input'>
-                    <label htmlFor='password'>Password</label>
-                    <input
-                        id='password'
-                        type='password'
-                        name='password'
-                        placeholder='Enter your password'
-                    />
-                </div>
-                <div className='form-input'>
-                    <label htmlFor='passwordRepeat'>Repeat Password</label>
-                    <input
-                        type="password"
-                        id='password'
-                        name='passwordRepeat'
-                        placeholder='Repeat your password'
-                    />
-                </div>
-                <div className='form-show'>
-                    <input type="checkbox" onChange={() => showPassword()}/>
-                    <p>Show password</p>
-                </div>
-                <input value='Sign up &rarr;' type='submit'className='form-button'/>
-                <p className='have-account'>Have an account? <Link to='/login'>Login</Link></p>
-            </form>
+        <div className='register'>
+            <div className='register-image'></div>
+            <div className='register-form'>
+                <h1>Create An Account</h1>
+                <form onSubmit={() => handleSubmit(this)} className="form">
+                    <div className='form-input'>
+                        <label htmlFor='email'>Email Address</label>
+                        <input
+                            type='email'
+                            name='email'
+                            placeholder='Enter your email'
+                            autoComplete='off'
+                        />
+                    </div>
+                    <div className='form-input'>
+                        <label htmlFor='password'>Password</label>
+                        <input
+                            id='password'
+                            type='password'
+                            name='password'
+                            placeholder='Enter your password'
+                        />
+                    </div>
+                    <div className='form-input'>
+                        <label htmlFor='passwordRepeat'>Repeat Password</label>
+                        <input
+                            type="password"
+                            id='password'
+                            name='passwordRepeat'
+                            placeholder='Repeat your password'
+                        />
+                    </div>
+                    <div className='form-show'>
+                        <input type="checkbox" onChange={() => showPassword()}/>
+                        <p>Show password</p>
+                    </div>
+                    <input value='Sign up &rarr;' type='submit'className='form-button'/>
+                    <p className='have-account'>Have an account? <Link to='/login'>Login</Link></p>
+                </form>
+            </div>
         </div>
     )
 }

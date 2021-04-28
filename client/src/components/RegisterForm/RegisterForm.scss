@@ -1,5 +1,6 @@
 .register {
-    background: #fff;
+    backdrop-filter: blur(100px) brightness(25%);
+    color: #fff;
     border-radius: 4rem;
     box-shadow: 0 0 2rem rgba(34, 34, 34, 0.746);
     width: 75%;
@@ -29,6 +30,7 @@
     &-image{
         background: red;
         height: 100%;
+        z-index: 100;
         border-radius: 4rem;
         box-shadow: .2rem 0 .6rem -1px rgba(34, 34, 34, 0.746);
         @media (max-width: 1150px) {
@@ -61,7 +63,7 @@
             margin-bottom: 0.3rem;
         }
         & input {
-            border: 2px solid rgba(128, 128, 128, 0.267);
+            border: none;
             border-radius: 1rem;
             padding: .9rem;
         }
