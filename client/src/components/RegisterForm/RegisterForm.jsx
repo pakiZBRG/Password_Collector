@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import './RegisterForm.scss';
 
 function RegisterForm() {
+    const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
     const showPassword = () => {
         const pass = document.querySelectorAll("#password");
         pass.forEach(p => p.type === "password" ? p.type = "text" : p.type = "password");
@@ -14,7 +16,13 @@ function RegisterForm() {
     }
 
     return (
-        <div className='register'>
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ delay: 1.5, ...easeOut }}
+            className='register'
+        >
             <div className='register-image'></div>
             <div className='register-form'>
                 <h1>Create An Account</h1>
@@ -54,7 +62,7 @@ function RegisterForm() {
                     <p className='have-account'>Have an account? <Link to='/login'>Login</Link></p>
                 </form>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
