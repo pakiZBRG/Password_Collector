@@ -54,13 +54,13 @@ exports.userLogin = (req, res) => {
         .then(user => {
             if(!user) {
                 return res.status(409).json({
-                    message: "No user with given email",
+                    error: "No user with given email",
                 })
             }
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if(err) {
                     return res.status(401).json({
-                        message: "Unauthorized user cant access."
+                        error: "Unauthorized user cant access."
                     });
                 }
                 if(result){
@@ -70,11 +70,10 @@ exports.userLogin = (req, res) => {
                     }, process.env.JWT_SECRET, {expiresIn: "1h"});
                     return res.status(200).json({
                         message: "Signin successful",
-                        token,
-                        user
+                        token
                     })
                 } else {
-                    return res.status(401).json({ message: "Invalid credentials" })
+                    return res.status(401).json({ error: "Invalid credentials" })
                 }
             })
         })
