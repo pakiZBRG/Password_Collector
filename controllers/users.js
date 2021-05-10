@@ -20,7 +20,7 @@ exports.userRegister = (req, res) => {
     User.find({email: req.body.email})
         .then(user => {
             if(user.length > 0) {
-                return res.status(409).json({ message: "User exists" });
+                return res.status(409).json({ error: "User with given email exists" });
             } else {
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if(err) {

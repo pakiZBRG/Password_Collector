@@ -6,7 +6,7 @@ exports.validRegister = [
     check('password').isLength({ min: 8 })
         .withMessage('Password must contain at least 8 characters')
         .matches(/\d/).withMessage('Password must contain a number')
-        .matches(/[A-Z]/).withMessage('At least one uppercase letter')
+        .matches(/[A-Z]/).withMessage('Password: at least one uppercase letter')
 ]
 
 exports.validLogin = [
