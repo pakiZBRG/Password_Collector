@@ -1,100 +1,85 @@
 .register {
-    backdrop-filter: blur(80px) brightness(25%);
+    display: flex;
+    width: 100vw;
+    height: 100vh;
     color: #fff;
-    border-radius: 4rem;
-    box-shadow: 0 0 2rem rgba(34, 34, 34, 0.746);
-    width: 75%;
-    height: 75%;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    @media (max-width: 1150px) {
-        display: block;
-    }
-    @media (max-width: 700px) {
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-    }
-    @media (max-height: 780px) {
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-    }
 
     &-image{
-        background: red;
-        height: 100%;
-        z-index: 100;
-        border-radius: 4rem;
-        box-shadow: .2rem 0 .6rem -1px rgba(34, 34, 34, 0.746);
-        @media (max-width: 1150px) {
-            display: none;
-        }
-        @media (max-height: 780px) {
-            border-radius: 0;
-            border-bottom-right-radius: 4rem;
-            border-top-right-radius: 4rem;
+        width: 100%;
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
         }
     }
-  
-    &-form {
-        width: 75%;
-        margin: 3rem auto;
+
+    &-form{
+        backdrop-filter: blur(80px) brightness(40%);
         font-family: 'Poppins';
-        @media (max-width: 700px) {
-            width: 85%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+
+        h1 {
+            text-align: center;
+            margin: 5rem 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 26rem;
             margin: 5rem auto;
+            @media (max-width: 500px) {
+                width: 20rem;
+            }
         }
     }
 }
 
 .form{
-    &-input{
-        display: flex;
-        flex-direction: column;
-        margin: 1.3rem 0;
-        & label {
-            margin-bottom: 0.3rem;
-        }
-        & input {
-            border: none;
-            border-radius: 1rem;
-            padding: .9rem;
-        }
-    }
-
-    & input[type='submit']{
-        background: crimson;
+    &-input input{
+        display: block;
+        width: 25rem;
+        background: rgba(255, 255, 255, .8);
         border: none;
-        color: white;
-        border-radius: .2rem;
-        width: 50%;
-        cursor: pointer;
-        height: 2.5rem;
+        padding: .5rem;
+        border-radius: 0.8rem;
+        margin: 0.5rem 0 .8rem 0;
+        font-family: 'Poppins';
+        @media (max-width: 500px) {
+            width: 18rem;
+        }
     }
 
     &-show{
         display: flex;
-        flex-direction: row;
-        margin-bottom: 2rem;
-        & p {
-            margin-left: .3rem;
-            font-size: .8rem;
-            color: gray;
+        width: 25rem;
+        & input {
+            margin: 0 0.5rem;
+        }
+    }
+
+    &-button{
+        width: 15rem;
+        border: none;
+        font-size: 1.1rem;
+        font-family: 'Poppins';
+        margin: 1.5rem 0 0.7rem 0;
+        padding: .4rem;
+        border: 1px solid #fff;
+        transition: 300ms cubic-bezier(0.215, 0.610, 0.355, 1);
+        cursor: pointer;
+        &:hover{
+            background:transparent;
+            color: #fff;
         }
     }
 }
 
 .have-account{
     font-size: 0.9rem;
-    margin-top: 0.3rem;
-    & a {
-        color: crimson;
-    }
+    & a{color: pink;}
 }

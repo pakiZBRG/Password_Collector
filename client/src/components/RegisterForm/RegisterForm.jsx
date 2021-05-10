@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './RegisterForm.scss';
+import geometry from '../../assets/Geometric.png';
 
 function RegisterForm() {
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
@@ -16,17 +17,25 @@ function RegisterForm() {
     }
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ delay: 1.5, ...easeOut }}
-            className='register'
-        >
-            <div className='register-image'></div>
-            <div className='register-form'>
+        <div className='register'>
+            <motion.div 
+                initial={{scale: 1.1, opacity: 0}}
+                animate={{scale: 1, opacity: 1}}
+                transition={easeOut}
+                exit={{scale: 1.1, opacity: 0}}
+                className='register-image'
+            >
+                <img src={geometry} alt="bg"/>
+            </motion.div>
+            <motion.div
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                transition={{delay: 0.1, ...easeOut}}
+                exit={{opacity: 0}}
+                className='register-form'
+            >
                 <h1>Create An Account</h1>
-                <form onSubmit={() => handleSubmit(this)} className="form">
+                <form onSubmit={handleSubmit} className="form">
                     <div className='form-input'>
                         <label htmlFor='email'>Email Address</label>
                         <input
@@ -58,11 +67,11 @@ function RegisterForm() {
                         <input type="checkbox" onChange={() => showPassword()}/>
                         <p>Show password</p>
                     </div>
-                    <input value='Sign up &rarr;' type='submit'className='form-button'/>
+                    <input value='Sign up &rarr;' type='submit' className='form-button'/>
                     <p className='have-account'>Have an account? <Link to='/login'>Login</Link></p>
                 </form>
-            </div>
-        </motion.div>
+            </motion.div>
+        </div>
     )
 }
 
