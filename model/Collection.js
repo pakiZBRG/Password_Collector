@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const collectionSchema = new mongoose.Schema({
     name: String,
     website: String,
+    category: String,
     passwords: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Password",

@@ -10,7 +10,8 @@ exports.newCollection = (req, res) => {
     const newCollection = new Collection({
         userId: userId,
         name: req.body.name,
-        website: req.body.website
+        website: req.body.website,
+        category: req.body.category
     })
 
     // save new Collection
@@ -47,6 +48,7 @@ exports.getCollection = (req, res) => {
                     _id: coll._id,
                     name: coll.name,
                     website: coll.website,
+                    category: coll.category,
                     userId: {
                         _id: coll.userId._id,
                         email: coll.userId.email

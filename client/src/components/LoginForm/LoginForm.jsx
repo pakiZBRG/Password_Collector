@@ -29,7 +29,7 @@ function LoginForm() {
                         history.push('/user');
                     }
                 })
-                .catch(err => console.log(err));
+                .catch(err => toast.error(err.response.data.error));
         } else {
             toast.warn("Please enter your credentials");
         }
