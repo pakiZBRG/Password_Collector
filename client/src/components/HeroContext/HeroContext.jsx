@@ -39,6 +39,18 @@ function HeroContext() {
                     <span>Create Account</span>
                 </motion.div>
             </Link>
+            <Link to='/login'>
+                <motion.div
+                    initial={{opacity: 0}}
+                    animate={{delay: 1, opacity: 1}}
+                    exit={{opacity: 0, delay: 0}}
+                    transition={{ delay: .4, ...easeOut}}
+                    className="btn effect04" 
+                    data-sm-link-text="Now"
+                >
+                    <span>Login</span>
+                </motion.div>
+            </Link>
         </div>
     )
 }

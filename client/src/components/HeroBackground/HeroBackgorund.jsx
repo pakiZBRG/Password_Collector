@@ -34,7 +34,7 @@ function HeroBackgorund() {
                 animate={{ scaleY: 1}}
                 exit={{scaleY: 0, delay: 1.4}}
                 transition={{delay: 0.5, ...easeOut}}
-                className="background-black social"
+                className="background-black"
             >
                 <motion.div
                     initial={{ opacity: 0, y: 20}}
