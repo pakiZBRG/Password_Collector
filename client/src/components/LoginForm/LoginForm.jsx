@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,6 +8,7 @@ import './LoginForm.scss';
 import geometry from '../../assets/Geometric.png';
 
 function LoginForm() {
+    const history = useHistory();
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
     const [user, setUser] = useState({});
 
@@ -23,10 +24,12 @@ function LoginForm() {
         if(user.email && user.password){
             axios.post('users/login', user)
                 .then(res => {
-                    toast.success(res.data.message);
                     authenticate(res);
+                    if(isAuth()){
+                        history.push(`/user/${res.data.user.id}`);
+                    }
                 })
-                .catch(err => toast.error(err.response.data.error));
+                .catch(err => console.log(err));
         } else {
             toast.warn("Please enter your credentials");
         }

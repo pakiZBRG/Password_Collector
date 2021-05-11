@@ -1,11 +1,11 @@
 export const authenticate = res => {
-    localStorage.setItem('user', res.data.token);
+    localStorage.setItem('user', res.data.user.id);
 }
 
 export const isAuth = () => {
     const loggedUser = localStorage.getItem('user');
     if(loggedUser){
-        return JSON.parse(loggedUser);
+        return loggedUser;
     } else {
         return false;
     }

@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { motion } from 'framer-motion';
 import './HeroContext.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { isAuth } from '../../helper/auth';
 
 function HeroContext() {
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
+    const history = useHistory();
+    const userId = localStorage.getItem("user")
+
+    useEffect(() => {
+        if(isAuth()){
+            history.push(`/user/${userId}`);
+        }
+    }, [userId, history]);
 
     return (
         <div className='context'>
