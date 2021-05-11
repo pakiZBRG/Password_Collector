@@ -177,10 +177,10 @@ exports.resetPassword = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    const token = jwt.decode(req.headers.token);
+    const id = req.params.id;
     
-    if(token){
-        User.find({_id: token.userId})
+    if(id){
+        User.find({_id: id})
             .select('-__v')
             // Populate a populated document
             .populate({

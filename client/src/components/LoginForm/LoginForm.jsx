@@ -26,7 +26,7 @@ function LoginForm() {
                 .then(res => {
                     authenticate(res);
                     if(isAuth()){
-                        history.push(`/user/${res.data.user.id}`);
+                        history.push('/user');
                     }
                 })
                 .catch(err => console.log(err));

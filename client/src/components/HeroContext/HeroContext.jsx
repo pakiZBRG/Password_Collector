@@ -7,11 +7,11 @@ import { isAuth } from '../../helper/auth';
 function HeroContext() {
     const easeOut = { duration: .8, ease: [.42, 0, .58, 1] };
     const history = useHistory();
-    const userId = localStorage.getItem("user")
+    const userId = localStorage.getItem("user");
 
     useEffect(() => {
         if(isAuth()){
-            history.push(`/user/${userId}`);
+            history.push('/user');
         }
     }, [userId, history]);
 

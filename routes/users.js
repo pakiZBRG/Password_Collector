@@ -12,7 +12,7 @@ router.post('/forgotpassword', validEmail, forgotPassword);
 
 router.post('/resetpassword/:link', resetPassword);
 
-router.get('/', getUser);
+router.get('/:id', getUser);
 
 router.delete('/:id', isAuth, userDelete);
 

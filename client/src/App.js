@@ -16,7 +16,7 @@ function App() {
           <Route exact path='/' component={Home}/>
           <Route exact path='/register' component={Register}/>
           <Route exact path='/login' component={Login}/>
-          <Route exact path='/user/:id' component={Passwords}/>
+          <Route exact path='/user' component={Passwords}/>
         </Switch>
       </AnimatePresence>
   );
