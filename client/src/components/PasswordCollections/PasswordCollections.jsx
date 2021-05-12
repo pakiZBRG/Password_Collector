@@ -14,7 +14,8 @@ function PasswordCollections() {
     const token = localStorage.getItem("token");
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
-    const [collection, setCollection] = useState({});
+    const [inputData, setInputData] = useState({});
+    const [collections, setCollections] = useState([]);
 
     useEffect(() => {
         if(!isAuth()) {
@@ -25,20 +26,24 @@ function PasswordCollections() {
                 .then(res => {
                     setUser(res.data.user[0]);
                     setLoading(l => !l);
+                    setCollections(res.data.user[0].collections);
                 })
                 .catch(err => console.log(err));
         }
     }, [history, userId]);
 
-    const handleChange = text => e => setCollection({...collection, [text]: e.target.value});
+    const handleChange = text => e => setInputData({...inputData, [text]: e.target.value});
 
-    let config = {headers: {token: token.toString()}}
+    let config = {headers: {token: token && token.toString()}}
 
     const handleSubmit = e => {
         e.preventDefault();
-        if(collection.name && collection.website && collection.category){
-            axios.post('/collections/new', { ...collection, userId }, config)
-                .then(res => toast.success(res.data.message))
+        if(inputData.name && inputData.website && inputData.category){
+            axios.post('/collections/new', { ...inputData, userId }, config)
+                .then(res => {
+                    toast.success(res.data.message)
+                    setCollections([...collections, res.data.collection])
+                })
                 .catch(err => toast.error(err.response.data.error))
         } else {
             toast.warn("Please fill all the information");
@@ -76,7 +81,7 @@ function PasswordCollections() {
                             <Button text={'Create new Collection'}/>
                         </form>
                     </div>
-                    {user.collections.map(col => <Card key={col._id} col={col}/>)}
+                    {collections.map(col => <Card key={col._id} col={col}/>)}
                 </>
                 : <div>Loading</div>}
             </div>
