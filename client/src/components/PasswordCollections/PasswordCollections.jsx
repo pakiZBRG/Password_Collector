@@ -4,6 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import './PasswordCollections.scss';
+import { Card } from './Card/Card';
+import { Input } from './Input/Input';
+import { Button } from './Button/Button';
 
 function PasswordCollections() {
     const history = useHistory();
@@ -27,6 +30,11 @@ function PasswordCollections() {
 
     console.log(user.collections);
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        console.log('submitted')
+    }
+
     return (
         <div className='flex'>
             <ToastContainer/>
@@ -49,19 +57,16 @@ function PasswordCollections() {
             <div className='coll'>
                 {!loading ? 
                 <>
-                    {user.collections.map(col => (
-                        <div className='coll-cards' key={col._id}>
-                            <p className='coll-cards__name'>{col.name}</p>
-                            <a
-                                className='coll-cards__site'
-                                href={`${col.website}`}
-                                target='blanc'
-                            >
-                                {col.website}
-                            </a>
-                            <p className='coll-cards__num'>{col.passwords.length} passwords</p>
-                        </div>
-                    ))}
+                    <div className='add-card'>
+                        <p>Create new collection</p>
+                        <form onSubmit={handleSubmit}>
+                            <Input placeholder='Facebook' text='Name'/>
+                            <Input placeholder='facebook.com' text='Webiste'/>
+                            <Input placeholder='Social' text='Category'/>
+                            <Button text={'Create new Collection'}/>
+                        </form>
+                    </div>
+                    {user.collections.map(col => <Card col={col}/>)}
                 </>
                 : <div>Loading</div>}
             </div>

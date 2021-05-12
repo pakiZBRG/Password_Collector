@@ -1,0 +1,28 @@
+.coll-cards{
+    padding: 2rem;
+    background: #f3f3f3;
+    transition: 300ms;
+    margin: 1rem;
+    &:hover{
+        cursor: pointer;
+        transform: translateY(-5px);
+        box-shadow: 6px 6px #cccccc, 12px 12px #b3b3b3;
+    }
+
+    &__name{
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    &__site{
+        font-size: 0.8rem;
+        color: crimson;
+    }
+
+    &__num {
+        color: gray;
+        padding: 1rem 0;
+        font-size: 0.8rem;
+    }
+}
