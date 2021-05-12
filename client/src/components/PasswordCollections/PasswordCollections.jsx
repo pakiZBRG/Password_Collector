@@ -11,8 +11,10 @@ import { Button } from './Button/Button';
 function PasswordCollections() {
     const history = useHistory();
     const userId = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
+    const [collection, setCollection] = useState({});
 
     useEffect(() => {
         if(!isAuth()) {
@@ -28,11 +30,19 @@ function PasswordCollections() {
         }
     }, [history, userId]);
 
-    console.log(user.collections);
+    const handleChange = text => e => setCollection({...collection, [text]: e.target.value});
+
+    let config = {headers: {token: token.toString()}}
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log('submitted')
+        if(collection.name && collection.website && collection.category){
+            axios.post('/collections/new', { ...collection, userId }, config)
+                .then(res => toast.success(res.data.message))
+                .catch(err => toast.error(err.response.data.error))
+        } else {
+            toast.warn("Please fill all the information");
+        }
     }
 
     return (
@@ -60,13 +70,13 @@ function PasswordCollections() {
                     <div className='add-card'>
                         <p>Create new collection</p>
                         <form onSubmit={handleSubmit}>
-                            <Input placeholder='Facebook' text='Name'/>
-                            <Input placeholder='facebook.com' text='Webiste'/>
-                            <Input placeholder='Social' text='Category'/>
+                            <Input handleChange={handleChange} placeholder='Facebook' text='Name'/>
+                            <Input handleChange={handleChange} placeholder='facebook.com' text='Website'/>
+                            <Input handleChange={handleChange} placeholder='Social' text='Category'/>
                             <Button text={'Create new Collection'}/>
                         </form>
                     </div>
-                    {user.collections.map(col => <Card col={col}/>)}
+                    {user.collections.map(col => <Card key={col._id} col={col}/>)}
                 </>
                 : <div>Loading</div>}
             </div>

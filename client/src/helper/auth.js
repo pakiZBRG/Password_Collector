@@ -1,9 +1,11 @@
 export const authenticate = res => {
     localStorage.setItem('user', res.data.user.id);
+    localStorage.setItem('token', res.data.token);
 }
 
 export const logout = next => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     next();
 }
 
