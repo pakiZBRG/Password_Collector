@@ -17,6 +17,7 @@ function PasswordCollections() {
     const [inputData, setInputData] = useState({});
     const [collections, setCollections] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [filter, setFilter] = useState([]);
 
     useEffect(() => {
         if(!isAuth()) {
@@ -56,6 +57,12 @@ function PasswordCollections() {
 
     const uniqueCat = [...new Set(categories)];
 
+    const filterCollections = e => {
+        const clicked = e.target.textContent;
+        setFilter([...filter, clicked]);
+        collections.forEach(col => col.category === clicked && console.log(col));
+    }
+
     return (
         <div className='flex'>
             <ToastContainer/>
@@ -66,7 +73,7 @@ function PasswordCollections() {
                         <p className='nav-flex__email'>{user.email}</p>
                         <p className='nav-flex__id'>{user._id}</p>
                         <div className='nav-flex__categories'>
-                            {uniqueCat.length ?  uniqueCat.map((cat, i) => <button className='cat-button' key={i}>{cat}</button>) : <p>No Categories to display</p>}
+                            {uniqueCat.length ? uniqueCat.map((cat, i) => <button className='cat-button' onClick={filterCollections} key={i}>{cat}</button>) : <p>No Categories to display</p>}
                         </div>
                         <button className='nav-flex__signout' onClick={() => {
                             logout(() => history.push('/'));
