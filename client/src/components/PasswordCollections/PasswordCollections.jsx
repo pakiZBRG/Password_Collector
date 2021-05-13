@@ -16,6 +16,7 @@ function PasswordCollections() {
     const [loading, setLoading] = useState(true);
     const [inputData, setInputData] = useState({});
     const [collections, setCollections] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         if(!isAuth()) {
@@ -27,6 +28,7 @@ function PasswordCollections() {
                     setUser(res.data.user[0]);
                     setLoading(l => !l);
                     setCollections(res.data.user[0].collections);
+                    res.data.user[0].collections.map(col => setCategories(c => [...c, col.category]));
                 })
                 .catch(err => console.log(err));
         }
@@ -34,15 +36,17 @@ function PasswordCollections() {
 
     const handleChange = text => e => setInputData({...inputData, [text]: e.target.value});
 
-    let config = {headers: {token: token && token.toString()}}
+    let config = {headers: {token: token && token.toString()}};
+    const { name, website, category } = inputData;
 
     const handleSubmit = e => {
         e.preventDefault();
-        if(inputData.name && inputData.website && inputData.category){
+        if(name && website && category){
             axios.post('/collections/new', { ...inputData, userId }, config)
                 .then(res => {
-                    toast.success(res.data.message)
-                    setCollections([...collections, res.data.collection])
+                    toast.success(res.data.message);
+                    setCollections([...collections, res.data.collection]);
+                    setCategories([...categories, res.data.collection.category]);
                 })
                 .catch(err => toast.error(err.response.data.error))
         } else {
@@ -50,21 +54,27 @@ function PasswordCollections() {
         }
     }
 
+    const uniqueCat = [...new Set(categories)];
+
     return (
         <div className='flex'>
             <ToastContainer/>
             <nav className='nav'>
                 {!loading ? 
-                    <>
-                        <p>{user.email}</p>
-                        <p>{user._id}</p>
-                        <button onClick={() => {
+                    <div className='nav-flex'>
+                        <p className='nav-flex__name'>password collections</p>
+                        <p className='nav-flex__email'>{user.email}</p>
+                        <p className='nav-flex__id'>{user._id}</p>
+                        <div className='nav-flex__categories'>
+                            {uniqueCat.length ?  uniqueCat.map((cat, i) => <button className='cat-button' key={i}>{cat}</button>) : <p>No Categories to display</p>}
+                        </div>
+                        <button className='nav-flex__signout' onClick={() => {
                             logout(() => history.push('/'));
                             toast.success("See you soon");
                         }}>
                             Signout
                         </button>
-                    </>
+                    </div>
                     :
                     <div>Loading</div>
                 }

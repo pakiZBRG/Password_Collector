@@ -3,6 +3,8 @@
     background: #f3f3f3;
     transition: 300ms;
     margin: 1rem;
+    max-height: 8rem;
+    width: 10rem;
     &:hover{
         cursor: pointer;
         transform: translateY(-5px);
@@ -11,7 +13,7 @@
 
     &__name{
         text-align: center;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: bold;
     }
 
