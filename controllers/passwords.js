@@ -23,9 +23,9 @@ exports.newPassword = (req, res) => {
     while(i > -1){
         const asciiChar = pass[i].charCodeAt(0);
         if(i % 2 == 0){
-            asciiPass.push(asciiChar + process.env.MOVE_M);
+            asciiPass.push(asciiChar + parseInt(process.env.MOVE_M));
         } else {
-            asciiPass.push(asciiChar + process.env.MOVE_N);
+            asciiPass.push(asciiChar + parseInt(process.env.MOVE_N));
         }
         i--;
     }
@@ -39,7 +39,7 @@ exports.newPassword = (req, res) => {
     asciiPass.forEach(p => stringPass.push(String.fromCharCode(p)));
 
     // Combine everything
-    const hash = prefix + pass3.join('') + sufix;
+    const hash = prefix + stringPass.join('') + sufix;
 
     const newPassword = new Password({
         collector: req.body.collector,

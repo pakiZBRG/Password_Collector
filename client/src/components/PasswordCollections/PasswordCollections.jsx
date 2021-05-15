@@ -14,10 +14,10 @@ function PasswordCollections() {
     const token = localStorage.getItem("token");
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
-    const [inputData, setInputData] = useState({});
+    const [colData, setColData] = useState({});
+    const [passData, setPassData] = useState({});
     const [collections, setCollections] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [filter, setFilter] = useState([]);
 
     useEffect(() => {
         if(!isAuth()) {
@@ -35,15 +35,21 @@ function PasswordCollections() {
         }
     }, [history, userId]);
 
-    const handleChange = text => e => setInputData({...inputData, [text]: e.target.value});
+    const handleCollection = text => e => setColData({...colData, [text]: e.target.value});
+    const handlePasswords = text => e => setPassData({...passData, [text]: e.target.value});
 
     let config = {headers: {token: token && token.toString()}};
-    const { name, website, category } = inputData;
+    const { name, website, category } = colData;
+    const { email, password, collector } = passData;
 
-    const handleSubmit = e => {
+    const asd = (e) => {
+        setPassData({...passData, collector: e.target.value});
+    }
+
+    const submitCollection = e => {
         e.preventDefault();
         if(name && website && category){
-            axios.post('/collections/new', { ...inputData, userId }, config)
+            axios.post('/collections/new', { ...colData, userId }, config)
                 .then(res => {
                     toast.success(res.data.message);
                     setCollections([...collections, res.data.collection]);
@@ -55,13 +61,21 @@ function PasswordCollections() {
         }
     }
 
-    const uniqueCat = [...new Set(categories)];
-
-    const filterCollections = e => {
-        const clicked = e.target.textContent;
-        setFilter([...filter, clicked]);
-        collections.forEach(col => col.category === clicked && console.log(col));
+    const submitPassword = e => {
+        e.preventDefault();
+        if(email && password && collector){
+            axios.post('/passwords/new', { ...passData, userId }, config)
+                .then(res => {
+                    toast.success(res.data.message);
+                    console.log(res);
+                })
+                .catch(err => toast.error(err.response.data.error))
+        } else {
+            toast.warn("Please fill all the information");
+        }
     }
+
+    const uniqueCat = [...new Set(categories)];
 
     return (
         <div className='flex'>
@@ -73,7 +87,7 @@ function PasswordCollections() {
                         <p className='nav-flex__email'>{user.email}</p>
                         <p className='nav-flex__id'>{user._id}</p>
                         <div className='nav-flex__categories'>
-                            {uniqueCat.length ? uniqueCat.map((cat, i) => <button className='cat-button' onClick={filterCollections} key={i}>{cat}</button>) : <p>No Categories to display</p>}
+                            {uniqueCat.length ? uniqueCat.map((cat, i) => <button className='cat-button' key={i}>{cat}</button>) : <p>No Categories to display</p>}
                         </div>
                         <button className='nav-flex__signout' onClick={() => {
                             logout(() => history.push('/'));
@@ -87,20 +101,34 @@ function PasswordCollections() {
                 }
             </nav>
             <div className='coll'>
+                <div className='add-card'>
+                    <p>Create new collection</p>
+                    <form onSubmit={submitCollection}>
+                        <Input handleChange={handleCollection} placeholder='Facebook' text='Name'/>
+                        <Input handleChange={handleCollection} placeholder='facebook.com' text='Website'/>
+                        <Input handleChange={handleCollection} placeholder='Social' text='Category'/>
+                        <Button text={'Create new Collection'}/>
+                    </form>
+                </div>
+                <div className='add-card'>
+                    <p>Add new password</p>
+                    <form onSubmit={submitPassword}>
+                        <Input handleChange={handlePasswords} placeholder='@gmail.com' text='Email'/>
+                        <Input handleChange={handlePasswords} placeholder='********' text='Password'/>
+                        <select onChange={asd}>
+                            <option>Choose your collection</option>
+                            {collections.map((col, i) => <option value={col._id} key={i}>{col.name}</option>)}
+                        </select>
+                        <Button text={'Add Password'}/>
+                    </form>
+                </div>
                 {!loading ? 
-                <>
-                    <div className='add-card'>
-                        <p>Create new collection</p>
-                        <form onSubmit={handleSubmit}>
-                            <Input handleChange={handleChange} placeholder='Facebook' text='Name'/>
-                            <Input handleChange={handleChange} placeholder='facebook.com' text='Website'/>
-                            <Input handleChange={handleChange} placeholder='Social' text='Category'/>
-                            <Button text={'Create new Collection'}/>
-                        </form>
+                    <div className='coll-flex'>
+                        {collections.map(col => <Card key={col._id} col={col}/>)}
                     </div>
-                    {collections.map(col => <Card key={col._id} col={col}/>)}
-                </>
-                : <div>Loading</div>}
+                    : 
+                    <div>Loading</div>
+                }
             </div>
         </div>
     )

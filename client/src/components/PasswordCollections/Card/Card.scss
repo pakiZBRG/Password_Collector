@@ -1,10 +1,11 @@
 .coll-cards{
-    padding: 2rem;
+    padding: 1.2rem 1.5rem;
     background: #f3f3f3;
     transition: 300ms;
     margin: 1rem;
-    max-height: 8rem;
-    width: 10rem;
+    max-height: 6.5rem;
+    min-width: 8rem;
+    position: relative;
     &:hover{
         cursor: pointer;
         transform: translateY(-5px);
@@ -13,18 +14,21 @@
 
     &__name{
         text-align: center;
-        font-size: 1.3rem;
-        font-weight: bold;
+        font-size: 1.2rem;
+        font-family: 'Libre Baskerville';
     }
 
     &__site{
         font-size: 0.8rem;
+        position: absolute;
+        bottom: 30%;
         color: crimson;
     }
 
     &__num {
         color: gray;
-        padding: 1rem 0;
+        position: absolute;
+        bottom: 10%;
         font-size: 0.8rem;
     }
 }
