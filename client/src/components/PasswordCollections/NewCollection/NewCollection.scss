@@ -1,0 +1,21 @@
+.add-card{
+    padding: 2rem;
+    background: #f3f3f3;
+    font-size: 3rem;
+    margin: 0 2rem;
+    max-height: 18rem;
+    border-top-left-radius: 3rem;
+    box-shadow: 6px 6px #cccccc, 12px 12px #b3b3b3;
+
+    & p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    & form{
+        display: flex;
+        flex-direction: column;
+        width: 18rem;
+    }
+}

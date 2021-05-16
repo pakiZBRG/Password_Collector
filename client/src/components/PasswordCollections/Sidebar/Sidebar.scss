@@ -1,0 +1,76 @@
+@mixin button($bg, $color, $margin-y) {
+    background: $bg;
+    box-shadow: 2px 3px #222;
+    color: $color;
+    border: none;
+    padding: 0.7rem;
+    font-size: 1.1rem;
+    border-radius: 2rem;
+    margin: $margin-y 0;
+    font-style: italic;
+    width: 15rem;
+    transition: 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    &:hover{
+        cursor: pointer;
+        box-shadow: 0 5px 8px #222;
+        transform: translateY(-4px);
+    }
+}
+
+.nav{
+    width: 25vw;
+    height: 100vh;
+    border-top-right-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    &-flex{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        &__name{
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding-bottom: 2rem;
+        }
+        &__email {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        &__id {
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        &__categories {
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 0;
+            height: 69vh;
+            position: relative;
+            &::before{
+                position: absolute;
+                content: '';
+                top: 1.5rem;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 2px;
+                width: 15vw;
+                background: rgba(34, 34, 34, .3);
+            }
+            &::after{
+                position: absolute;
+                content: '';
+                bottom: 1.5rem;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 2px;
+                width: 15vw;
+                background: rgba(34, 34, 34, .3);
+            }
+        }
+        &__signout {
+            @include button(#4600f1, #fff, 0);
+        }
+    }
+}
