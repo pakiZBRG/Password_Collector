@@ -1,4 +1,3 @@
-
 .field__input{ 
     --uiFieldPlaceholderColor: var(--fieldPlaceholderColor, #767676);
     background-color: transparent;
@@ -9,11 +8,11 @@
 }
 
 .field__input:focus::-webkit-input-placeholder{
-    color: var(--uiFieldPlaceholderColor);
+    color: #767676;
 }
 
 .field__input:focus::-moz-placeholder{
-    color: var(--uiFieldPlaceholderColor);
+    color: #767676;
 }
 
 .field{
