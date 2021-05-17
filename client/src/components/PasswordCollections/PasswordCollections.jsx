@@ -91,16 +91,18 @@ function PasswordCollections() {
                 }
             </nav>
             <div className='coll'>
-                <NewCollection 
-                    submit={submitCollection} 
-                    handle={handleCollection}
-                />
-                <NewPassword
-                    submit={submitPassword}
-                    handleInput={handlePasswords}
-                    handleSelect={handleSelect}
-                    collections={collections}
-                />
+                <div className='coll-row'>
+                    <NewCollection 
+                        submit={submitCollection} 
+                        handle={handleCollection}
+                    />
+                    <NewPassword
+                        submit={submitPassword}
+                        handleInput={handlePasswords}
+                        handleSelect={handleSelect}
+                        collections={collections}
+                    />
+                </div>
                 {!loading ? 
                     <div className='coll-flex'>
                         {collections.map(col => <Card key={col._id} col={col}/>)}

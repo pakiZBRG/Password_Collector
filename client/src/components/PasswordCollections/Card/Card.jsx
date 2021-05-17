@@ -5,7 +5,7 @@ export const Card = ({col}) => (
         <p className='coll-cards__name'>{col.name}</p>
         <a
             className='coll-cards__site'
-            href={`${col.website}`}
+            href={`https://${col.website}`}
             target='blanc'
         >
             {col.website}
