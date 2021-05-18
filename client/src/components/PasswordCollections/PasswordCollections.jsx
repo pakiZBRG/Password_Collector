@@ -130,6 +130,7 @@ function PasswordCollections() {
             </div>
             {openPassword && 
                 <Passwords 
+                    config={config}
                     toggle={() => setOpenPassword(false)}
                     passwords={passwords}
                 />

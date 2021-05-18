@@ -8,9 +8,9 @@ function NewCollection({submit, handle}) {
         <div className='add-card'>
             <p>Create new collection</p>
             <form onSubmit={submit}>
-                <Input handleChange={handle} placeholder='Facebook' text='Name'/>
-                <Input handleChange={handle} placeholder='facebook.com' text='Website'/>
-                <Input handleChange={handle} placeholder='Social' text='Category'/>
+                <Input handleChange={handle} type='text' placeholder='Facebook' text='Name'/>
+                <Input handleChange={handle} type='text' placeholder='facebook.com' text='Website'/>
+                <Input handleChange={handle} type='text' placeholder='Social' text='Category'/>
                 <Button text={'Create new Collection'}/>
             </form>
         </div>

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './Passwords.scss';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 
-function Passwords({toggle, passwords}) {
+function Passwords({toggle, passwords, config}) {
     const [hash, setHash] = useState('');
-    const [copied, setCopied] = useState(false);
 
     const showPassword = e => {
         const prefix = process.env.REACT_APP_PREFIX;
@@ -41,9 +41,21 @@ function Passwords({toggle, passwords}) {
         pass.type === "password" ? pass.type = "text" : pass.type = "password";
     }
 
+    const removePassword = (e) => {
+        const passId = e.target.parentNode.attributes[0].value;
+        const removeParent = e.target.closest('tr');
+        axios.delete(`/passwords/${passId}`, config)
+            .then(res => {
+                toast.success(res.data.message);
+                removeParent.parentNode.removeChild(removeParent);
+            })
+            .catch(err => console.log(err));
+    }
+
     const copyStatus = () => {
-        setCopied(true);
-        toast.success('Copied to clipboard');
+        if(hash){
+            toast.success('Copied to clipboard');
+        }
     }
 
     return (
@@ -83,10 +95,10 @@ function Passwords({toggle, passwords}) {
                                                 <i className='fa fa-copy icon'></i>
                                             </CopyToClipboard>
                                         </td>
-                                        <td>
+                                        <td value={pass._id}>
                                             <i onClick={showPassword} className='fa fa-eye icon'></i>
                                             <i className="fa fa-edit icon"> </i>
-                                            <i className="fa fa-remove icon"></i>
+                                            <i onClick={removePassword} className="fa fa-remove icon"></i>
                                         </td>
                                     </tr>
                                 )}

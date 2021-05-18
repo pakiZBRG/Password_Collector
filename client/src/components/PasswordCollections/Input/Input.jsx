@@ -1,9 +1,9 @@
 import './Input.scss';
 
-export const Input = ({placeholder, text, handleChange}) => (
+export const Input = ({placeholder, type, text, handleChange}) => (
     <label className="field field_v2">
         <input 
-            type='text'
+            type={type}
             name={text}
             onChange={handleChange(text.toLowerCase())}
             className="field__input"
