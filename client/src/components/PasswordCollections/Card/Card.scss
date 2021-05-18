@@ -29,6 +29,20 @@
         bottom: 10%;
         font-size: 0.8rem;
     }
+
+    &__remove{
+        position: absolute;
+        top: -2%;
+        right: 5%;
+        font-size: 1.5rem;
+        color: gray;
+        transition: 400ms;
+        &:hover{
+            color: #222;
+            cursor: pointer;
+            transform: rotateZ(90deg);
+        }
+    }
 }
 
 .bar {

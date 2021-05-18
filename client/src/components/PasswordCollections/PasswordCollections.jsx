@@ -59,6 +59,17 @@ function PasswordCollections() {
         }
     }
 
+    const deleteCollection = e => {
+        const passId = e.target.nextSibling.value;
+        const removeParent = e.target.closest('div');
+        axios.delete(`/collections/${passId}`, config)
+            .then(res => {
+                toast.success(res.data.message);
+                removeParent.parentNode.removeChild(removeParent);
+            })
+            .catch(err => toast.error(err.response.data.error));
+    }
+
     const { name, website, category } = colData;
     const { email, password, collector } = passData;
 
@@ -116,7 +127,12 @@ function PasswordCollections() {
                 {!loading ? 
                     <div className='coll-flex'>
                         {collections.map(col => 
-                            <Card toggle={toggleOpenPassword} key={col._id} col={col}/>
+                            <Card
+                                remove={deleteCollection}
+                                toggle={toggleOpenPassword}
+                                key={col._id}
+                                col={col}
+                            />
                         )}
                     </div>
                     : 
