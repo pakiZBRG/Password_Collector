@@ -9,6 +9,7 @@ import Sidebar from './Sidebar/Sidebar';
 import Loading from './Loading/Loading';
 import NewCollection from './NewCollection/NewCollection';
 import NewPassword from './NewPassword/NewPassword';
+import Passwords from './Passwords/Passwords';
 
 function PasswordCollections() {
     const history = useHistory();
@@ -55,7 +56,7 @@ function PasswordCollections() {
             colId = e.target.parentNode.children[1].defaultValue;
         }
         setOpenPassword(!openPassword);
-        console.log(openPassword);
+        
         if(!openPassword) {
             axios.get(`/collections/${colId}`, config)
                 .then(res => setPasswords(res.data))
@@ -127,11 +128,11 @@ function PasswordCollections() {
                     <Loading/>
                 }
             </div>
-            {openPassword &&
-                <div className='password'>
-                    {console.log(passwords)}
-                    <span onClick={() => setOpenPassword(false)}>&times;</span>
-                </div>
+            {openPassword && 
+                <Passwords 
+                    toggle={() => setOpenPassword(false)}
+                    passwords={passwords}
+                />
             }
         </div>
     )

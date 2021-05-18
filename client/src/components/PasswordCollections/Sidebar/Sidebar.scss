@@ -18,10 +18,8 @@
 }
 
 .nav{
-    width: 25vw;
     height: 100vh;
-    border-top-right-radius: 3rem;
-    border-bottom-right-radius: 3rem;
+    min-width: 24rem;
     &-flex{
         display: flex;
         flex-direction: column;
