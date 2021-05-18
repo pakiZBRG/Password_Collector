@@ -6,6 +6,7 @@
     height: 6.5rem;
     min-width: 8rem;
     position: relative;
+    text-align: center;
     &:hover{
         cursor: pointer;
         transform: translateY(-5px);
@@ -13,15 +14,12 @@
     }
 
     &__name{
-        text-align: center;
         font-size: 1.2rem;
         font-family: 'Libre Baskerville';
     }
 
     &__site{
-        font-size: 0.8rem;
-        position: absolute;
-        bottom: 30%;
+        font-size: 0.75rem;
         color: crimson;
     }
 

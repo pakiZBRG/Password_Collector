@@ -52,7 +52,7 @@ function PasswordCollections() {
         let colId;
         if(e.target.children[1]){
             colId = e.target.children[1].defaultValue;
-        } else {
+        } else if(e.target.parentNode) {
             colId = e.target.parentNode.children[1].defaultValue;
         }
         setOpenPassword(!openPassword);
