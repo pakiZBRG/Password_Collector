@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './Passwords.scss';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Passwords({toggle, passwords}) {
     const [hash, setHash] = useState('');
+    const [copied, setCopied] = useState(false);
+
     const showPassword = e => {
         const prefix = process.env.REACT_APP_PREFIX;
         const sufix = process.env.REACT_APP_SUFIX;
@@ -37,8 +41,14 @@ function Passwords({toggle, passwords}) {
         pass.type === "password" ? pass.type = "text" : pass.type = "password";
     }
 
+    const copyStatus = () => {
+        setCopied(true);
+        toast.success('Copied to clipboard');
+    }
+
     return (
         <>
+            <ToastContainer/>
             {passwords.collection && 
             <div className='password'>
                 <div className='password-info'>
@@ -64,11 +74,19 @@ function Passwords({toggle, passwords}) {
                                     <tr key={pass._id}>
                                         <td>{i+1}.</td>
                                         <td>{pass.email}</td>
-                                        <td><input id='password' type='password' value={pass.password} title={hash}/></td>
                                         <td>
-                                            <i onClick={showPassword} className='fa fa-eye'></i>
-                                            <i className="fa fa-edit"> </i>
-                                            <i className="fa fa-remove"></i>
+                                            <input id='password' type='password' value={pass.password} readOnly/>
+                                            <CopyToClipboard
+                                                text={hash}
+                                                onCopy={copyStatus}
+                                            >
+                                                <i className='fa fa-copy icon'></i>
+                                            </CopyToClipboard>
+                                        </td>
+                                        <td>
+                                            <i onClick={showPassword} className='fa fa-eye icon'></i>
+                                            <i className="fa fa-edit icon"> </i>
+                                            <i className="fa fa-remove icon"></i>
                                         </td>
                                     </tr>
                                 )}
