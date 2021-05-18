@@ -8,12 +8,12 @@
     position: relative;
     text-align: center;
     &:hover{
-        cursor: pointer;
         transform: translateY(-5px);
         box-shadow: 6px 6px #cccccc, 12px 12px #b3b3b3;
     }
 
     &__name{
+        cursor: pointer;
         font-size: 1.2rem;
         font-family: 'Libre Baskerville';
     }

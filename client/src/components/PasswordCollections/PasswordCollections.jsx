@@ -49,12 +49,7 @@ function PasswordCollections() {
     const handleSelect = e => setPassData({...passData, collector: e.target.value});
 
     const toggleOpenPassword = (e) => {
-        let colId;
-        if(e.target.children[1]){
-            colId = e.target.children[1].defaultValue;
-        } else if(e.target.parentNode) {
-            colId = e.target.parentNode.children[1].defaultValue;
-        }
+        let colId = e.target.nextSibling.value;
         setOpenPassword(!openPassword);
         
         if(!openPassword) {
