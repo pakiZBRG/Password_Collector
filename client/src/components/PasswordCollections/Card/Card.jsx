@@ -11,8 +11,9 @@ export const Card = ({col, toggle}) => (
         >
             {col.website}
         </a>
-        <p className='coll-cards__num'>
-            {col.passwords.length} passwords
-        </p>
+        <div className='bar'>
+            <span className='bar-progress' style={{width: `${col.passwords.length / 15 * 100}%`}}></span>
+            <span className='bar-num'>{col.passwords.length} / 15 passwords</span>
+        </div>
     </div>
 );
