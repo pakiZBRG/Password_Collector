@@ -12,6 +12,10 @@
         box-shadow: 6px 6px #cccccc, 12px 12px #b3b3b3;
     }
 
+    &:hover &__remove{
+        opacity: 1;
+    }
+
     &__name{
         cursor: pointer;
         font-size: 1.2rem;
@@ -31,6 +35,7 @@
     }
 
     &__remove{
+        opacity: 0;
         position: absolute;
         top: -2%;
         right: 5%;
@@ -40,7 +45,6 @@
         &:hover{
             color: #222;
             cursor: pointer;
-            transform: rotateZ(90deg);
         }
     }
 }

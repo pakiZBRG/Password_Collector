@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function Passwords({toggle, passwords, config}) {
     const [hash, setHash] = useState('');
+    const [visible, setVisible] = useState(false);
 
     const showPassword = e => {
         const prefix = process.env.REACT_APP_PREFIX;
@@ -37,6 +38,7 @@ function Passwords({toggle, passwords, config}) {
         let stringPass = [];
         asciiPass.forEach(p => stringPass.push(String.fromCharCode(p)));
         setHash(stringPass.join(''));
+        setVisible(!visible);
 
         pass.type === "password" ? pass.type = "text" : pass.type = "password";
     }
@@ -96,8 +98,7 @@ function Passwords({toggle, passwords, config}) {
                                             </CopyToClipboard>
                                         </td>
                                         <td value={pass._id}>
-                                            <i onClick={showPassword} className='fa fa-eye icon'></i>
-                                            <i className="fa fa-edit icon"> </i>
+                                            <i onClick={showPassword} className={`fa ${visible ? `fa-eye-slash` : `fa-eye`} icon`}></i>
                                             <i onClick={removePassword} className="fa fa-remove icon"></i>
                                         </td>
                                     </tr>
