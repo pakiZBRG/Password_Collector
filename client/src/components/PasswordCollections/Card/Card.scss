@@ -24,7 +24,7 @@
 
     &__site{
         font-size: 0.75rem;
-        color: crimson;
+        color: #4600f1;
     }
 
     &__num {
@@ -40,6 +40,7 @@
         top: -2%;
         right: 5%;
         font-size: 1.5rem;
+        font-weight: bold;
         color: gray;
         transition: 400ms;
         &:hover{
