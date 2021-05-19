@@ -60,7 +60,7 @@ function PasswordCollections() {
     }
 
     const deleteCollection = e => {
-        const passId = e.target.nextSibling.value;
+        const passId = e.target.offsetParent.children[2].value;
         const removeParent = e.target.closest('div');
         axios.delete(`/collections/${passId}`, config)
             .then(res => {
