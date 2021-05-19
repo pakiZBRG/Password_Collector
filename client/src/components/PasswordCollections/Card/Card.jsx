@@ -13,7 +13,7 @@ export const Card = ({remove, col, toggle}) => (
         <input type='hidden' defaultValue={col._id} readOnly={true}/>
         <a
             className='coll-cards__site'
-            href={`https://${col.website}`}
+            href={`${col.website}`}
             target='blanc'
         >
             {col.website}

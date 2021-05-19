@@ -23,6 +23,7 @@ function PasswordCollections() {
     const [collections, setCollections] = useState([]);
     const [categories, setCategories] = useState([]);
     const [passwords, setPasswords] = useState({});
+    const [filter, setFilter] = useState([]);
 
     const [openPassword, setOpenPassword] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -99,6 +100,14 @@ function PasswordCollections() {
         }
     }
 
+    const filterByCategories = e => {
+        const clicked = e.target.innerText;
+        const filtered = collections.filter(col => col.category === clicked);
+        setFilter(filtered);
+    }
+
+    const resetFilter = () => setFilter(collections);
+
     const uniqueCat = [...new Set(categories)];
 
     return (
@@ -106,7 +115,12 @@ function PasswordCollections() {
             <ToastContainer/>
             <nav className='nav'>
                 {!loading ? 
-                    <Sidebar categories={uniqueCat} user={user}/>
+                    <Sidebar 
+                        reset={resetFilter}
+                        filter={filterByCategories}
+                        categories={uniqueCat} 
+                        user={user}
+                    />
                         :
                     <Loading/>
                 }
@@ -124,9 +138,18 @@ function PasswordCollections() {
                         collections={collections}
                     />
                 </div>
+                <div className='coll-num'>{!filter.length == 0 ? filter.length : collections.length} / {collections.length} <span style={{color: 'gray'}}>collections</span></div>
                 {!loading ? 
                     <div className='coll-flex'>
-                        {collections.map(col => 
+                        {!filter.length == 0 ? 
+                        filter.map(col => 
+                            <Card
+                                remove={deleteCollection}
+                                toggle={toggleOpenPassword}
+                                key={col._id}
+                                col={col}
+                            />
+                        ) : collections.map(col => 
                             <Card
                                 remove={deleteCollection}
                                 toggle={toggleOpenPassword}

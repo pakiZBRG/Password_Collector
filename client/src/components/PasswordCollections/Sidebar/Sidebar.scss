@@ -17,6 +17,10 @@
     }
 }
 
+.cat-button{
+    @include button(#c6e92a, #000, 0.45rem);
+}
+
 .nav{
     height: 100vh;
     min-width: 24rem;

@@ -3,7 +3,7 @@ import { logout } from '../../../helper/auth';
 import { useHistory } from 'react-router-dom';
 import './Sidebar.scss';
 
-function Sidebar({categories, user}) {
+function Sidebar({reset, filter, categories, user}) {
     const history = useHistory();
 
     return (
@@ -13,10 +13,14 @@ function Sidebar({categories, user}) {
             <p className='nav-flex__id'>{user._id}</p>
             <div className='nav-flex__categories'>
                 {categories.length ? 
-                    categories.map((cat, i) => 
-                        <button className='cat-button' key={i}>{cat}</button>) 
-                            : 
-                        <p>No Categories to display</p>
+                    <>
+                    <button onClick={reset} className='cat-button'>All</button>
+                    {categories.map((cat, i) => 
+                        <button onClick={filter} className='cat-button' key={i}>{cat}</button>
+                    )}
+                    </>
+                        :
+                    <p>No Categories to display</p>
                 }
             </div>
             <button className='nav-flex__signout' onClick={() => {
