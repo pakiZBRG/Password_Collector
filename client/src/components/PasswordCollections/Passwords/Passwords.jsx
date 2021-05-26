@@ -3,6 +3,7 @@ import './Passwords.scss';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import $ from 'jquery';
 
 function Passwords({toggle, passwords, config}) {
     const [hash, setHash] = useState('');
@@ -60,6 +61,14 @@ function Passwords({toggle, passwords, config}) {
         }
     }
 
+    $("tbody tr").hover(function() { // Mouse over
+        $(this).siblings().stop().fadeTo(200, 0.2);
+        $(this).parent().siblings().stop().fadeTo(200, 0.8); 
+      }, function() { // Mouse out
+        $(this).siblings().stop().fadeTo(200, 1);
+        $(this).parent().siblings().stop().fadeTo(200, 1);
+      });
+
     return (
         <>
             <ToastContainer/>
@@ -67,14 +76,16 @@ function Passwords({toggle, passwords, config}) {
                 <div className='password'>
                     <div className='password-info'>
                         <h1>{passwords.collection.name}</h1>
-                        <a target='blanc' href={`https://${passwords.collection.website}`}>{passwords.collection.website}</a>
+                        <a target='blanc' href={passwords.collection.website}>{passwords.collection.name}</a>
                         <h3>{passwords.collection.category}</h3>
                     </div>
+                    <p className='password-num'>
+                        <span>{passwords.collection.passwords.length}</span> passwords saved
+                    </p>
                     <div className='password-pass'>
                         <table>
                             <thead>
                                 <tr>
-                                    <td>#</td>
                                     <td>Email</td>
                                     <td>Password</td>
                                     <td>Action</td>
@@ -82,11 +93,10 @@ function Passwords({toggle, passwords, config}) {
                             </thead>
                             <tbody>
                             {!passwords.collection.passwords.length ? 
-                                <tr className='password-nopass'><td>No Passwords</td></tr>
+                                <tr></tr>
                                     :
-                                <>{passwords.collection.passwords.map((pass, i) => 
+                                <>{passwords.collection.passwords.map(pass => 
                                     <tr key={pass._id}>
-                                        <td>{i+1}.</td>
                                         <td>{pass.email}</td>
                                         <td>
                                             <input id='password' type='password' value={pass.password} readOnly/>

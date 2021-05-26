@@ -16,7 +16,7 @@ export const Card = ({remove, col, toggle}) => (
             href={`${col.website}`}
             target='blanc'
         >
-            {col.website}
+            {col.name}
         </a>
         <div className='bar'>
             <span className='bar-progress' style={{width: `${col.passwords.length / 15 * 100}%`}}></span>

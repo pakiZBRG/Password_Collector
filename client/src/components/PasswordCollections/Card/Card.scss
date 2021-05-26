@@ -9,7 +9,8 @@
     text-align: center;
     &:hover{
         transform: translateY(-5px);
-        box-shadow: 6px 6px #cccccc, 12px 12px #b3b3b3;
+        box-shadow: 1px 1px 5px #302d29, 6px 6px #c6e92a,
+                    7px 7px 2px #302d29, 12px 12px #4600f1;
     }
 
     &:hover &__remove{
@@ -19,12 +20,22 @@
     &__name{
         cursor: pointer;
         font-size: 1.2rem;
-        font-family: 'Libre Baskerville';
+        font-family: 'Poppins';
     }
 
     &__site{
         font-size: 0.75rem;
-        color: #4600f1;
+        text-decoration: none;
+        border: 1px solid  #4600f1;
+        padding: 0 0.6rem;
+        border-radius: 0.9rem;
+        background: #4600f1;
+        color: #f3f3f3;
+        transition: 100ms;
+        &:hover{
+            color: #4600f1;
+            background: #f3f3f3;
+        }
     }
 
     &__num {
@@ -44,7 +55,7 @@
         color: gray;
         transition: 400ms;
         &:hover{
-            color: #222;
+            color: #302d29;
             cursor: pointer;
         }
     }
@@ -57,12 +68,12 @@
     transform: translate(-50%, -50%);
     width: 8.5rem;
     border-radius: 1rem;
-    height: 0.5rem;
-    background-color: #d4d4d4;
+    height: 0.55rem;
+    box-shadow: inset 0px 0px 5px #d4d4d4;
     &-progress {
         position: absolute;
         left: 0;
-        background: linear-gradient(to right, #4600f1, #da3b35);
+        background: linear-gradient(to right, #302d29, #4600f1);
         height: inherit;
         border-bottom-left-radius: 0.5rem;
         border-top-left-radius: 0.5rem;
