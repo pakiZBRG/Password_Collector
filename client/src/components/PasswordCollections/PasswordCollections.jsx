@@ -4,12 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import './PasswordCollections.scss';
-import { Card } from './Card/Card';
 import Sidebar from './Sidebar/Sidebar';
-import Loading from './Loading/Loading';
-import NewCollection from './NewCollection/NewCollection';
-import NewPassword from './NewPassword/NewPassword';
 import Passwords from './Passwords/Passwords';
+import Collections from './Collections/Collections';
 
 function PasswordCollections() {
     const history = useHistory();
@@ -49,6 +46,9 @@ function PasswordCollections() {
     const handlePasswords = text => e => setPassData({...passData, [text]: e.target.value});
     const handleSelect = e => setPassData({...passData, collector: e.target.value});
 
+    const { name, website, category } = colData;
+    const { email, password, collector } = passData;
+
     const toggleOpenPassword = (e) => {
         let colId = e.target.nextSibling.value;
         setOpenPassword(!openPassword);
@@ -70,9 +70,6 @@ function PasswordCollections() {
             })
             .catch(err => toast.error(err.response.data.error));
     }
-
-    const { name, website, category } = colData;
-    const { email, password, collector } = passData;
 
     const submitCollection = e => {
         e.preventDefault();
@@ -113,55 +110,25 @@ function PasswordCollections() {
     return (
         <div className='flex'>
             <ToastContainer/>
-            <nav className='nav'>
-                {!loading ? 
-                    <Sidebar 
-                        reset={resetFilter}
-                        filter={filterByCategories}
-                        categories={uniqueCat} 
-                        user={user}
-                    />
-                        :
-                    <Loading/>
-                }
-            </nav>
-            <div className='coll'>
-                <div className='coll-row'>
-                    <NewCollection 
-                        submit={submitCollection} 
-                        handle={handleCollection}
-                    />
-                    <NewPassword
-                        submit={submitPassword}
-                        handleInput={handlePasswords}
-                        handleSelect={handleSelect}
-                        collections={collections}
-                    />
-                </div>
-                <div className='coll-num'>{!filter.length == 0 ? filter.length : collections.length} / {collections.length} <span style={{color: 'gray'}}>collections</span></div>
-                {!loading ? 
-                    <div className='coll-flex'>
-                        {!filter.length == 0 ? 
-                        filter.map(col => 
-                            <Card
-                                remove={deleteCollection}
-                                toggle={toggleOpenPassword}
-                                key={col._id}
-                                col={col}
-                            />
-                        ) : collections.map(col => 
-                            <Card
-                                remove={deleteCollection}
-                                toggle={toggleOpenPassword}
-                                key={col._id}
-                                col={col}
-                            />
-                        )}
-                    </div>
-                    : 
-                    <Loading/>
-                }
-            </div>
+            <Sidebar 
+                reset={resetFilter}
+                filter={filterByCategories}
+                categories={uniqueCat} 
+                user={user}
+                loading={loading}
+            />
+            <Collections
+                submitCollections={submitCollection} 
+                submitPassword={submitPassword}
+                handleCollection={handleCollection}
+                handlePasswords={handlePasswords}
+                handleSelect={handleSelect}
+                deleteCollection={deleteCollection}
+                toggleOpenPassword={toggleOpenPassword}
+                collections={collections}
+                filter={filter}
+                loading={loading}
+            />
             {openPassword && 
                 <Passwords 
                     config={config}
