@@ -107,7 +107,7 @@ exports.forgotPassword = async (req, res) => {
                 subject: "Reset password link",
                 html: `
                     <h4>Please Click on Link to Reset Password:</h4>
-                    <p>http://localhost:5000/users/resetpassword/${token}</p>
+                    <p>http://localhost:3000/resetpassword/${token}</p>
                 `
             }
     

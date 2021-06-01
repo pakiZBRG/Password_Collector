@@ -22,3 +22,10 @@ exports.validLogin = [
 exports.validEmail = [
     check('email', 'Email is required').isEmail().withMessage('Must be a valid email address')
 ]
+
+exports.validPassword = [
+    check('password').isLength({ min: 8 })
+        .withMessage('Password must contain at least 8 characters')
+        .matches(/\d/).withMessage('Password must contain a number')
+        .matches(/[A-Z]/).withMessage('Password: at least one uppercase letter')
+]

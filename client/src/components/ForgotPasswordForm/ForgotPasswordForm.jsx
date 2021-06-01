@@ -39,7 +39,7 @@ function ForgotPassword() {
                 exit={{opacity: 0}}
                 className='register-form'
             >
-                <h1>Reset Password</h1>
+                <h1>Forgotten Password</h1>
                 <form onSubmit={handleSubmit} className="form">
                     <div className='form-input'>
                         <label htmlFor='email'>Email Address</label>

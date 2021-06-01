@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Passwords from './pages/Passwords';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const location = useLocation();
@@ -19,6 +20,7 @@ function App() {
           <Route exact path='/login' component={Login}/>
           <Route exact path='/user' component={Passwords}/>
           <Route exact path='/forgot-password' component={ForgotPassword}/>
+          <Route exact path='/resetpassword/:token' component={ResetPassword}/>
         </Switch>
       </AnimatePresence>
   );
