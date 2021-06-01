@@ -118,7 +118,7 @@ function PasswordCollections() {
                 loading={loading}
             />
             <Collections
-                submitCollections={submitCollection} 
+                submitCollection={submitCollection} 
                 submitPassword={submitPassword}
                 handleCollection={handleCollection}
                 handlePasswords={handlePasswords}

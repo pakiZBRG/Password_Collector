@@ -10,18 +10,18 @@ function Collections(props) {
     const { collections, filter, loading } = props;
     
     return (
-        <div
-            // initial={{opacity: 0, x: 100}}
-            // animate={{opacity: 1, x: 0}}
-            // transition={{duration: .6, delay: .5, ease: "easeOut"}}
-            // exit={{opacity: 0, x: 150, delay: 0.8}}
+        <motion.div
+            initial={{opacity: 0, x: 100}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: .6, delay: .5, ease: "easeOut"}}
+            exit={{opacity: 0, x: 150, delay: 0.8}}
             className='coll'
         >
-            <div
-                // initial={{opacity: 0, y: -30}}
-                // animate={{opacity: 1, y: 0}}
-                // transition={{duration: .7, delay: 1, ease: "easeOut"}}
-                // exit={{opacity: 0, x: 150}}
+            <motion.div
+                initial={{opacity: 0, y: -30}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: .7, delay: 1, ease: "easeOut"}}
+                exit={{opacity: 0, x: 150}}
                 className='coll-row'
             >
                 <NewCollection
@@ -34,7 +34,7 @@ function Collections(props) {
                     handleSelect={props.handleSelect}
                     collections={props.collections}
                 />
-            </div>
+            </motion.div>
             <div className='coll-num'>
                 {!filter.length == 0 ? filter.length : collections.length} / {collections.length}
                 <span style={{color: 'gray'}}> collections</span>
@@ -67,7 +67,7 @@ function Collections(props) {
                 : 
                 <Loading/>
             }
-        </div>
+        </motion.div>
     )
 }
 
