@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 const morgan = require('morgan');
 require('dotenv').config();
 const app = express();
@@ -25,8 +26,13 @@ app.use("/users", require('./routes/users'));
 app.use("/passwords", require('./routes/passwords'));
 app.use("/collections", require('./routes/collections'));
 app.get('/', (req, res) => {
-    res.send("Server running")
-})
+    res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
+
+// Production Ready
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static("client/build"));
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
