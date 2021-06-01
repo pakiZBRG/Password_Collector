@@ -24,7 +24,13 @@ function Sidebar({reset, loading, filter, categories, user}) {
     };
 
     return (
-        <nav className='nav'>
+        <motion.nav
+            initial={{opacity: 0, x: -100}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: .6, ease: "easeOut"}}
+            exit={{opacity: 0, x: -100, delay: 0.4}}
+            className='nav'
+        >
             {!loading ? 
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -65,7 +71,7 @@ function Sidebar({reset, loading, filter, categories, user}) {
                     :
                 <Loading/>
             }
-        </nav>
+        </motion.nav>
     )
 }
 
